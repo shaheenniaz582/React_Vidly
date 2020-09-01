@@ -5,6 +5,11 @@ class Movies extends Component {
     state = {  
         movies: getMovies() // movies property is set to function here just for sake of understanding
     };
+    // event hNDLER FOR ONCLICK arrow function used so no constructor or bining required here
+    handleDelete = (movie) => {
+        const movies = this.state.movies.filter( m => m._id !== movie._id);
+        this.setState({ movies });
+    }
     render() { 
         return ( 
             // inserting bootstrap table here to display movies in form of table
@@ -18,14 +23,15 @@ class Movies extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.state.movies.map(movie =>
-                       <tr key={movie._id}>
-                           <td>{ movie.title }</td>
-                           <td>{ movie.genre.name }</td> 
-                           <td>{ movie.numberInStock }</td>
-                           <td>{ movie.dailyRentalRate }</td>
-                           <td><button>Delete</button></td>
-                       </tr> )}
+                    {this.state.movies.map(movie => (
+                        <tr key={movie._id}>
+                        <td>{ movie.title }</td>
+                        <td>{ movie.genre.name }</td> 
+                        <td>{ movie.numberInStock }</td>
+                        <td>{ movie.dailyRentalRate }</td>
+                        <td><button onClick={() => this.handleDelete(movie)}>Delete</button></td> 
+                    </tr>
+                    ))}
                 </tbody>
             </table>
 
