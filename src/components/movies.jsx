@@ -41,7 +41,8 @@ class Movies extends Component {
                     ))}
                 </tbody>
             </table>
-        </React.Fragment>);
+        </React.Fragment>
+        );
 }
 }
  
