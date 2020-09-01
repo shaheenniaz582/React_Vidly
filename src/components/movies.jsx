@@ -11,8 +11,15 @@ class Movies extends Component {
         this.setState({ movies });
     }
     render() { 
+        // some conditional rendering
+        const { length: count } = this.state.movies; // here using destructuring assigning length
+                                                    // property of movies state to count constant
+        if ( count === 0 )
+            return <p>There are no movies in the database!!!</p>
         return ( 
             // inserting bootstrap table here to display movies in form of table
+            <React.Fragment>
+                <p>Showing { count } movies in the database</p>
             <table className="table">
                 <thead>
                     <tr>
@@ -34,9 +41,8 @@ class Movies extends Component {
                     ))}
                 </tbody>
             </table>
-
-         );
-    }
+        </React.Fragment>);
+}
 }
  
 export default Movies;
