@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+// stateless functional component
 const Like = (props) => { 
     let classes = "fa fa-heart";
     if (!props.liked) classes += "-o";

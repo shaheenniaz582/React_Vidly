@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Like from './common/like';
+import Pagination from './common/pagination';
 import { getMovies }  from '../services/fakeMovieService'; // getMovie is a named export in fakeMovieService
 
 class Movies extends Component {
     state = {  
-        movies: getMovies() // movies property is set to function here just for sake of understanding
+        movies: getMovies(), // movies property is set to function here just for sake of understanding
+        pageSize: 4
     };
 
     handleLike = movie => {
@@ -17,9 +19,13 @@ class Movies extends Component {
     }
 
     // event hNDLER FOR ONCLICK arrow function used so no constructor or bining required here
-    handleDelete = (movie) => {
+    handleDelete = movie => {
         const movies = this.state.movies.filter( m => m._id !== movie._id);
         this.setState({ movies });
+    }
+
+    handlePageChange = page => {
+        console.log(page);
     }
 
     render() { 
@@ -63,6 +69,7 @@ class Movies extends Component {
                     ))}
                 </tbody>
             </table>
+            <Pagination itemsCount={count} pageSize={this.state.pageSize} onChange={this.handlePageChange}/>
         </React.Fragment>
         );
 }
