@@ -6,7 +6,8 @@ import { getMovies }  from '../services/fakeMovieService'; // getMovie is a name
 class Movies extends Component {
     state = {  
         movies: getMovies(), // movies property is set to function here just for sake of understanding
-        pageSize: 4
+        pageSize: 4,
+        currentPage: 1
     };
 
     handleLike = movie => {
@@ -25,13 +26,15 @@ class Movies extends Component {
     }
 
     handlePageChange = page => {
-        console.log(page);
+        //console.log(page);
+        this.setState({ currentPage: page });
     }
 
     render() { 
         // some conditional rendering
         const { length: count } = this.state.movies; // here using destructuring assigning length
                                                     // property of movies state to count constant
+        const { currentPage, pageSize } = this.state;                                            
         if ( count === 0 )
             return <p>There are no movies in the database!!!</p>
         return ( 
@@ -69,7 +72,12 @@ class Movies extends Component {
                     ))}
                 </tbody>
             </table>
-            <Pagination itemsCount={count} pageSize={this.state.pageSize} onChange={this.handlePageChange}/>
+            <Pagination 
+                itemsCount={count} 
+                pageSize={pageSize} 
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+            />
         </React.Fragment>
         );
 }
