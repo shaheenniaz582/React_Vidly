@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Like from './common/like';
 import Pagination from './common/pagination';
 import { getMovies }  from '../services/fakeMovieService'; // getMovie is a named export in fakeMovieService
+import { paginate } from '../utils/paginate.js'; // to import client side paginate module 
 
 class Movies extends Component {
     state = {  
@@ -34,9 +35,9 @@ class Movies extends Component {
         // some conditional rendering
         const { length: count } = this.state.movies; // here using destructuring assigning length
                                                     // property of movies state to count constant
-        const { currentPage, pageSize } = this.state;                                            
-        if ( count === 0 )
-            return <p>There are no movies in the database!!!</p>
+        const { currentPage, pageSize, movies: allMovies } = this.state;                                            
+        if ( count === 0 ) return <p>There are no movies in the database!!!</p>
+        const movies = paginate(allMovies, currentPage, pageSize);
         return ( 
             // inserting bootstrap table here to display movies in form of table
             <React.Fragment>
@@ -53,7 +54,7 @@ class Movies extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.state.movies.map(movie => (
+                    {movies.map(movie => (
                     <tr key={movie._id}>
                         <td>{ movie.title }</td>
                         <td>{ movie.genre.name }</td> 
