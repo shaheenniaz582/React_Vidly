@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
 import Like from './common/like';
+import ListGroup from './common/listGroup';
 import Pagination from './common/pagination';
 import { getMovies }  from '../services/fakeMovieService'; // getMovie is a named export in fakeMovieService
+import { getGenres } from '../services/fakeGenreService';
 import { paginate } from '../utils/paginate.js'; // to import client side paginate module 
 
 class Movies extends Component {
     state = {  
-        movies: getMovies(), // movies property is set to function here just for sake of understanding
+        movies: [],
+        geners: [],
         pageSize: 4,
         currentPage: 1
     };
+
+    componentDidMount() {
+        this.setState({ movies: getMovies(), geners: getGeners()});
+    }
+
+    handleGenreSelect = genre => {
+        console.log(genre);
+    }
 
     handleLike = movie => {
         //console.log('Like clicked', movie);
@@ -40,9 +51,13 @@ class Movies extends Component {
         const movies = paginate(allMovies, currentPage, pageSize);
         return ( 
             // inserting bootstrap table here to display movies in form of table
-            <React.Fragment>
+            <div className="row">
+                <div className="col-2">
+                    <ListGroup items= {this.state.geners} onItemSelect={this.handleGenreSelect} />
+                </div>
+                <div className="col">
                 <p>Showing { count } movies in the database</p>
-            <table className="table">
+                <table className="table">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -79,7 +94,9 @@ class Movies extends Component {
                 currentPage={currentPage}
                 onPageChange={this.handlePageChange}
             />
-        </React.Fragment>
+                </div>
+                
+        </div>
         );
 }
 }
