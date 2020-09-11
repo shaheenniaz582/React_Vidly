@@ -15,7 +15,7 @@ class Movies extends Component {
     };
 
     componentDidMount() {
-        this.setState({ movies: getMovies(), geners: getGeners()});
+        this.setState({ movies: getMovies(), geners: getGenres()});
     }
 
     handleGenreSelect = genre => {
@@ -52,8 +52,12 @@ class Movies extends Component {
         return ( 
             // inserting bootstrap table here to display movies in form of table
             <div className="row">
-                <div className="col-2">
-                    <ListGroup items= {this.state.geners} onItemSelect={this.handleGenreSelect} />
+                <div className="col-3">
+                    <ListGroup 
+                        items= {this.state.geners} 
+                        textProperty="name"
+                        valueProperty="_id"
+                        onItemSelect={this.handleGenreSelect} />
                 </div>
                 <div className="col">
                 <p>Showing { count } movies in the database</p>
