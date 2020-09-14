@@ -19,7 +19,7 @@ class Movies extends Component {
     }
 
     handleGenreSelect = genre => {
-        console.log(genre);
+        this.setState({ selectedGenre: genre });
     }
 
     handleLike = movie => {
@@ -55,6 +55,7 @@ class Movies extends Component {
                 <div className="col-3">
                     <ListGroup 
                         items= {this.state.geners} 
+                        selectedItem={this.state.selectedGenre}
                         /* Deleting them after adding default props to component"
                         textProperty="name"
                         valueProperty="_id" */
