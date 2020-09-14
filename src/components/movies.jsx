@@ -55,8 +55,9 @@ class Movies extends Component {
                 <div className="col-3">
                     <ListGroup 
                         items= {this.state.geners} 
+                        /* Deleting them after adding default props to component"
                         textProperty="name"
-                        valueProperty="_id"
+                        valueProperty="_id" */
                         onItemSelect={this.handleGenreSelect} />
                 </div>
                 <div className="col">
