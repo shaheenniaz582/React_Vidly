@@ -9,17 +9,19 @@ import { paginate } from '../utils/paginate.js'; // to import client side pagina
 class Movies extends Component {
     state = {  
         movies: [],
-        geners: [],
+        genres: [],
         pageSize: 4,
         currentPage: 1,
     };
 
     componentDidMount() {
-        this.setState({ movies: getMovies(), geners: getGenres()});
+        const genres = [{name: "All Genres"}, ...getGenres()];
+        
+        this.setState({ movies: getMovies(), genres});
     }
 
     handleGenreSelect = genre => {
-        this.setState({ selectedGenre: genre });
+        this.setState({ selectedGenre: genre, currentPage: 1 });
     }
 
     handleLike = movie => {
@@ -49,7 +51,7 @@ class Movies extends Component {
         const { currentPage, pageSize, selectedGenre, movies: allMovies } = this.state;                                            
         if ( count === 0 ) return <p>There are no movies in the database!!!</p>
 
-        const filtered = selectedGenre
+        const filtered = selectedGenre && selectedGenre._id
          ? allMovies.filter(m => m.genre._id === selectedGenre._id) 
          : allMovies;
         console.log(filtered);
@@ -59,7 +61,7 @@ class Movies extends Component {
             <div className="row">
                 <div className="col-3">
                     <ListGroup 
-                        items= {this.state.geners} 
+                        items= {this.state.genres} 
                         selectedItem={this.state.selectedGenre}
                         /* Deleting them after adding default props to component"
                         textProperty="name"
