@@ -11,7 +11,7 @@ class Movies extends Component {
         movies: [],
         geners: [],
         pageSize: 4,
-        currentPage: 1
+        currentPage: 1,
     };
 
     componentDidMount() {
@@ -46,9 +46,14 @@ class Movies extends Component {
         // some conditional rendering
         const { length: count } = this.state.movies; // here using destructuring assigning length
                                                     // property of movies state to count constant
-        const { currentPage, pageSize, movies: allMovies } = this.state;                                            
+        const { currentPage, pageSize, selectedGenre, movies: allMovies } = this.state;                                            
         if ( count === 0 ) return <p>There are no movies in the database!!!</p>
-        const movies = paginate(allMovies, currentPage, pageSize);
+
+        const filtered = selectedGenre
+         ? allMovies.filter(m => m.genre._id === selectedGenre._id) 
+         : allMovies;
+        console.log(filtered);
+        const movies = paginate(filtered, currentPage, pageSize);
         return ( 
             // inserting bootstrap table here to display movies in form of table
             <div className="row">
@@ -62,7 +67,7 @@ class Movies extends Component {
                         onItemSelect={this.handleGenreSelect} />
                 </div>
                 <div className="col">
-                <p>Showing { count } movies in the database</p>
+                <p>Showing { filtered.length } movies in the database</p>
                 <table className="table">
                 <thead>
                     <tr>
@@ -95,7 +100,7 @@ class Movies extends Component {
                 </tbody>
             </table>
             <Pagination 
-                itemsCount={count} 
+                itemsCount={filtered.length} 
                 pageSize={pageSize} 
                 currentPage={currentPage}
                 onPageChange={this.handlePageChange}

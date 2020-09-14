@@ -4,7 +4,8 @@ import _ from 'lodash'; //popular js library for underscore
 
 const Pagination = props => {
     const { itemsCount, currentPage, pageSize, onPageChange} = props;
-    console.log(currentPage);
+    console.log(itemsCount);
+    //console.log(currentPage);
     const pagesCount = Math.ceil(itemsCount / pageSize);
     //console.log(pagesCount);
     if (pagesCount === 1) return null;
