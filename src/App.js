@@ -3,6 +3,7 @@ import './App.css';
 import Movies from './components/movies';
 
 function App() {
+  // for git
   return (
     <main className="container">
       <Movies />
