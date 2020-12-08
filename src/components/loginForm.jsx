@@ -5,7 +5,8 @@ import Input from './common/input';
 class LoginForm extends Component {
     state = {
         account: {  username: '', password: '' },
-        errors: {}
+        errors: {} /* 0 or more key value pair where key is name of target field, 
+                    and value is error message */
     };
 
     schema = {
@@ -18,16 +19,14 @@ class LoginForm extends Component {
         const result = Joi.validate(this.state.account, this.schema, { 
             abortEarly: false
          });
-        console.log(result);
+        // console.log(result);
+        if (!result.error) return null;
 
         const errors = {};
-        const { account } = this.state;
-        if (account.username.trim() === '')
-            errors.username = 'Username is required';
-        if (account.password.trim() === '')
-            errors.password = 'Password is required';
-        
-        return Object.keys(errors).length === 0 ? null : errors; // this function will return an array of all the keys in this object
+         // mapping an array into an object //
+        for (let item of result.error.details)  
+         errors[item.path[0]] = item.message;
+        return errors;
     };
     handleSubmit = e => {
         e.preventDefault(); // to prevent default behaviour and avoid complete cycle of requests to server
